@@ -3001,6 +3001,25 @@ class ImportService implements GrailsConfigurationAware {
                 update["nameComplete"] = [set: nameComplete]
         }
         update['priority'] = [set: (int) Math.round(priority)]
+        // VBP: keep filling common names here (removed upstream in #373 in favour of align-common-name),
+        // so the preferred name follows commonName.languages and commonNameExact stays populated.
+        def commonNames = searchService.lookupVernacular(guid, !online)
+        if (commonNames && !commonNames.isEmpty()) {
+            commonNames = commonNames.sort { n1, n2 ->
+                def s = n2.priority - n1.priority
+                if (s == 0 && commonLanguages) {
+                    def s1 = commonLanguages.contains(n1.language) ? 1 : 0
+                    def s2 = commonLanguages.contains(n2.language) ? 1 : 0
+                    s = s1 - s2
+                }
+                s
+            }
+            def single = commonNames.find({ it.status != deprecatedStatus.status && (!commonLanguages || commonLanguages.contains(it.language))})?.name
+            def names = new LinkedHashSet(commonNames.collect { it.name })
+            update["commonName"] = [set: names]
+            update["commonNameExact"] = [set: names]
+            update["commonNameSingle"] = [set: single ]
+        }
         def identifiers = searchService.lookupIdentifier(guid, !online)
         if (identifiers) {
             update["additionalIdentifiers"] = [set: identifiers.collect { it.guid }]
