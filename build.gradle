@@ -70,6 +70,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.springframework.boot:spring-boot-starter-websocket"
+    // Nashorn was removed from the JDK in Java 15; the standalone engine runs the weights.json scripts
+    implementation "org.openjdk.nashorn:nashorn-core:15.4"
     implementation "org.grails:grails-core"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-tomcat"
