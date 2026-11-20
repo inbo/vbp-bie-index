@@ -63,6 +63,13 @@ configurations {
     runtimeClasspath {
         extendsFrom developmentOnly
     }
+    all {
+        // cglib (via dwca-io) drags in asm:asm 3.x, which clashes with the ASM that nashorn-core needs.
+        // cglib-nodep is the same code with its own repackaged ASM.
+        resolutionStrategy.dependencySubstitution {
+            substitute module('cglib:cglib') using module('cglib:cglib-nodep:2.2.2')
+        }
+    }
 }
 
 dependencies {
