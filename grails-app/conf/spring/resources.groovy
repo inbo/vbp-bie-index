@@ -6,7 +6,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 // Place your Spring DSL code here
 beans = {
     // Override the grails-spring-websocket plugin's default config to add CORS support
-    webSocketConfig(CustomWebSocketConfig)
+    webSocketConfig(CustomWebSocketConfig) {
+        allowedOrigins = application.config.getProperty('websocket.cors.allowedOrigins', String, '*')
+    }
     liveSolrClient(SolrClientBean,
             application.config.solr.live.type,
             application.config.solr.live.connection,

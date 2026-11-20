@@ -1252,11 +1252,13 @@ class ImportService implements GrailsConfigurationAware {
                     }
                 } else {
 
-                    String lastUpdatedYear = conservationStatusYearMap[taxonDoc?.guid]
+                    // Unmatched items have no taxon doc; key them by name so they don't throw
+                    String yearKey = taxonDoc?.guid ?: item.name
+                    String lastUpdatedYear = conservationStatusYearMap[yearKey]
 
                     if (!lastUpdatedYear || year.toInteger() > lastUpdatedYear.toInteger()) {
 
-                        conservationStatusYearMap[taxonDoc.guid] = year
+                        conservationStatusYearMap[yearKey] = year
 
                         if (updateSolrDoc(taxonDoc, item, jsonFieldName, solrFieldName, year, yearSolrField, buffer, drUid)) {
                             unmatchedTaxaCount++
