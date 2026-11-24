@@ -812,7 +812,7 @@ class ImportService implements GrailsConfigurationAware {
                 }
             } catch (IOException ex) {
                 // catch it so we don't stop indexing other pages
-                log("Problem accessing/reading Species lists <${project.url}>: " + ex.getMessage() + " - document skipped")
+                log("Problem accessing/reading Species lists <${url}>: " + ex.getMessage() + " - document skipped")
                 log.warn(ex.getMessage(), ex)
             }
         }
@@ -2316,7 +2316,7 @@ class ImportService implements GrailsConfigurationAware {
                         }
                     }
                 } catch (Exception ex) {
-                    log("Unable to load image list at ${url}: ${ex.getMessage()} ... ignoring")
+                    log("Unable to load image list ${drUid}: ${ex.getMessage()} ... ignoring")
                 }
             }
         }
@@ -2351,7 +2351,7 @@ class ImportService implements GrailsConfigurationAware {
                         }
                     }
                 } catch (Exception ex) {
-                    log("Unable to load image list at ${url}: ${ex.getMessage()} ... ignoring")
+                    log("Unable to load image list ${drUid}: ${ex.getMessage()} ... ignoring")
                 }
             }
         }
@@ -2379,7 +2379,7 @@ class ImportService implements GrailsConfigurationAware {
                         }
                     }
                 } catch (Exception ex) {
-                    log("Unable to load image list at ${url}: ${ex.getMessage()} ... ignoring")
+                    log("Unable to load image list ${drUid}: ${ex.getMessage()} ... ignoring")
                 }
             }
         }
